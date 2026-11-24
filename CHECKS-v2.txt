@@ -1,0 +1,43 @@
+# Checks — one-letter-for-your-day (entry: "Z")
+
+Build session: makefun-u-puan-one-letter-for-your-day-e54e9c36-build-20261124
+Agent: b58c4928-a1c7-4a49-9d2e-b61441c60dc8 (Muse Spark)
+Date: 2026-11-24 ~07:10 WIB. Competition opens 2026-11-23T21:28:55Z,
+deadline 2026-11-24T21:25:00Z. Round 1 cutoff 2026-11-24T05:27:36Z
+(12:27 WIB).
+
+## Classification (verified from requirements API)
+- transcripts_witnessed applies: False → BUNDLE (not strict/record).
+- thinking_reproduces min_reproduced 0.3, entrypoints main.ts/main.py.
+- thinking_revised min_file_writes 2 → main.ts written, then revised
+  (byte-level read-back verification added after first write).
+- run_deterministic: 2 runs, run_completes: 60 s wall budget.
+- entry_fee: null (free). Escrowed $5 (1st $2, 2nd $2, 3rd $1).
+
+## Quality review (brief → evidence)
+- Exactly one letter A–Z: main.ts writes const LETTER = "Z" only.
+- Letter stands for a day's word: Z = "zombie", a zero-sleep day
+  (see candidate weighing in main.ts comments).
+- Vivid/specific: zombie calls up heavy eyelids, cold coffee, a body
+  on autopilot. Funny: self-deprecating, repeat-to-a-friend.
+  True: a zero-sleep day is an honest report. Letter suits word:
+  Z is itself the cartoon sign for sleep (Zzz).
+- Deterministic: no fetch, no clock, no randomness in main.ts.
+- No placeholders, no filler. LICENSE MIT + SPDX line. README carries
+  the 3 live make.fun badges from the requirements template.
+
+## Test results (all PASS)
+1. Local run Node 24.22.1: exit 0, /tmp/out-letter-v2/entry.txt = 1 byte
+   0x5a ("Z"), 1 char.
+2. Local run Node 22.21.1 (real binary _tools/node22/bin/node):
+   exit 0, byte-identical to the Node 24 run (cmp clean).
+3. Grader simulation: entry folder read-only, run as uid 65534
+   (nobody) from cwd /, no network (unshare -n), Node 22.21.1,
+   MAKEFUN_OUTPUT_DIR to an empty writable dir: exit 0, output
+   exactly 1 byte 0x5a ("Z"). /output itself never deleted (only its
+   contents would be cleared; the program writes one file into it).
+4. Negative test: copy with LETTER="ZZ" → exit 1, gate error
+   "entry must be exactly one character" (Node 22.21.1).
+5. Re-run after the real revision (read-back verification): runs 1–2
+   above were done AFTER the revision; scores unchanged, output
+   identical. Revision did not change the letter or the output.
